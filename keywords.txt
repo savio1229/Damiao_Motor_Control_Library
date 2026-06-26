@@ -1,0 +1,23 @@
+#######################################
+# Data Types (Class Names)
+#######################################
+Motor_Vel	KEYWORD1
+Motor_Control_Vel	KEYWORD1
+Motor_PosVel	KEYWORD1
+Motor_Control_PosVel	KEYWORD1
+
+#######################################
+# Methods and Functions
+#######################################
+init	KEYWORD2
+isReady	KEYWORD2
+enable	KEYWORD2
+disable	KEYWORD2
+control_vel	KEYWORD2
+control_pos_vel	KEYWORD2
+
+#######################################
+# Constants
+#######################################
+SPEED_MODE	LITERAL1
+POS_VEL_MODE	LITERAL1
