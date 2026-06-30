@@ -2,9 +2,8 @@
 # Data Types (Class Names)
 #######################################
 Motor_Vel	KEYWORD1
-Motor_Control_Vel	KEYWORD1
 Motor_PosVel	KEYWORD1
-Motor_Control_PosVel	KEYWORD1
+Motor_Control	KEYWORD1
 
 #######################################
 # Methods and Functions

@@ -1,9 +1,9 @@
 #include <Arduino.h>
 #include <Usb.h>
 #include <cdcacm.h>
-#include <damiao_pos_vel.hpp> // 引入位置速度模式標頭檔
+#include <damiao_control.hpp> // 引入統一的控制標頭檔
 
-// 建立 USB Host Shield 必備硬體物件
+// 1. 底層 USB Host Shield 硬體實例
 USB Usb;
 class ACMAsyncOper : public CDCAsyncOper {
 public:
@@ -12,36 +12,41 @@ public:
 ACMAsyncOper AsyncOper;
 ACM Acm(&Usb, &AsyncOper);
 
-// 實例化位置速度模式控制器
-damiao::Motor_Control_PosVel motor_ctrl(&Usb, &Acm);
+// 2. 實例化統一的控制器
+damiao::Motor_Control ctrl(&Usb, &Acm);
 
-// 定義位置速度模式下的馬達物件 (ID 4)
-damiao::Motor_PosVel motor4(0x04, 1000.0f, 395.0f);
+// 3. 定義一顆位置速度模式的馬達
+// 參數：(CAN ID, 最大限制弧度, 最大限制 RPM)
+damiao::Motor_PosVel motor4_posvel(0x04, 1000.0f, 395.0f); 
 
 void setup() {
     Serial.begin(115200);
-    while(!Serial); 
+    while(!Serial);
     
-    Serial.println("[Position-Velocity Mode] Initializing USB Host...");
-    motor_ctrl.init();
+    Serial.println("[Pure Position-Velocity Demo] Initializing USB Host...");
+    ctrl.init(); // 初始化硬體與設定鮑率
     
-    Serial.println("USB2CAN Ready! Enabling Motor 4...");
-    motor_ctrl.enable(motor4);
-    delay(200); 
+    Serial.println("Enabling Motor 4 (Position-Velocity Mode)...");
+    ctrl.enable(motor4_posvel); // 使能馬達
+    delay(200); // 留出時間讓馬達建立使能狀態
 }
 
 void loop() {
-    Serial.println("Moving Output Shaft to 90.0 degrees (Max 50 RPM)...");
-    for (int i = 0; i < 100; i++) {
-        motor_ctrl.control_pos_vel(motor4, 90.0f, 50.0f);
-        delay(20); // 維持 20ms 控制週期
+    Serial.println(">>> Action: Move to 90.0 Degrees (Slowly: Max 30 RPM)");
+    // 持續 3 秒 (150 次 * 20ms)，給馬達足夠的時間走到目標角度
+    for(int i = 0; i < 150; i++) {
+        // 參數：(馬達物件, 目標角度度數, 限制最高轉速)
+        ctrl.control_pos_vel(motor4_posvel, 90.0f, 30.0f); 
+        delay(20); 
     }
-    delay(2000);
-
-    Serial.println("Moving Output Shaft back to 0.0 degrees (Max 100 RPM)...");
-    for (int i = 0; i < 100; i++) {
-        motor_ctrl.control_pos_vel(motor4, 0.0f, 100.0f);
+    
+    delay(500); // 在 90 度稍微停頓 0.5 秒
+    
+    Serial.println(">>> Action: Return to 0.0 Degrees (Fast: Max 60 RPM)");
+    for(int i = 0; i < 150; i++) {
+        ctrl.control_pos_vel(motor4_posvel, 0.0f, 60.0f); 
         delay(20);
     }
-    delay(2000); 
+
+    delay(500); // 在 0 度稍微停頓 0.5 秒
 }
