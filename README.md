@@ -1,6 +1,6 @@
 # Damiao Motor Control Library
 
-本函式庫專為 Arduino 平台開發，旨在透過 USB Host Shield 的 ACM 介面封裝 USB2CAN 協定，實現對大廟（Damiao）馬達的精準控制。
+本函式庫專為 Arduino 平台開發，旨在透過 USB Host Shield 的 ACM 介面封裝 USB2CAN 協定，實現對达妙（Damiao）馬達的精準控制。
 
 本庫採用統一的**單一萬能控制器架構**，同時支援**速度模式（Velocity Mode）**與**位置速度模式（Position-Velocity Mode）**。開發者可以使用同一個控制器實例，在同一個硬體通訊管道下對多個不同模式的大廟馬達進行獨立、同步的混合控制，完美避免了通訊埠搶佔與底層硬體重複初始化的問題。
 
@@ -9,7 +9,7 @@
 ## 1. 專案名稱與簡介
 
 * **函式庫名稱**：Damiao Motor Control Library
-* **主要用途**：本函式庫封裝了大廟馬達的 USB2CAN 通訊協定。開發者只需透過 USB Host Shield 擴充板的 ACM 介面，即可輕鬆地在 Arduino 上對多個大廟馬達進行獨立或同步的使能、失能、速度控制與位置控制。
+* **主要用途**：本函式庫封裝了达妙馬達的 USB2CAN 通訊協定。開發者只需透過 USB Host Shield 擴充板的 ACM 介面，即可輕鬆地在 Arduino 上對多個达妙馬達進行獨立或同步的使能、失能、速度控制與位置控制。
 
 ---
 
