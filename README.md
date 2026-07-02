@@ -76,7 +76,7 @@ float GetMaxRpm() const：獲取馬達目前設定的最大轉速。
 | `void enable(const Motor_PosVel& motor)` | `motor`: 位置速度馬達 | `void` | [函式多載] 發送使能指令（`0xFC`），啟用指定的位置速度馬達。 |
 | `void disable(const Motor_Vel& motor)` | `motor`: 速度模式馬達 | `void` | [函式多載] 發送失能指令（`0xFD`），解除指定速度馬達的受控狀態。 |
 | `void disable(const Motor_PosVel& motor)` | `motor`: 位置速度馬達 | `void` | [函式多載] 發送失能指令（`0xFD`），解除指定位置速度馬達的受控狀態。 |
-| `void control_vel(const Motor_Vel& motor, float vel_rpm)` | `motor`: 速度馬達物件<br>`vel_rpm`: 目標轉速 (RPM) | `void` | 驅動馬達以設定 RPM 運轉。內部會自動依據馬達的 `max_rpm` 進行安全限幅，並自動換算為大廟協定所需的弧度/秒 (rad/s) 訊號。 |
+| `void control_vel(const Motor_Vel& motor, float vel_rpm)` | `motor`: 速度馬達物件<br>`vel_rpm`: 目標轉速 (RPM) | `void` | 驅動馬達以設定 RPM 運轉。內部會自動依據馬達的 `max_rpm` 進行安全限幅，並自動換算為达妙協定所需的弧度/秒 (rad/s) 訊號。 |
 | `void control_pos_vel(const Motor_PosVel& motor, float output_pos_deg, float vel_rpm)` | `motor`: 位置速度馬達<br>`output_pos_deg`: 輸出軸目標角度 (度)<br>`vel_rpm`: 最高速度限制 (RPM) | `void` | 控制馬達移動到指定的輸出軸角度（單位：度）。內部已自動套用大廟馬達內部減速比（3591.0 / 187.0）計算出內部的實際控制弧度，並進行邊界安全限幅。 |
 
 ---
@@ -127,7 +127,7 @@ void loop() {
     for (int i = 0; i < 100; i++) {
         ctrl.control_vel(motor3_vel, 100.0f);
         ctrl.control_pos_vel(motor4_posvel, 45.0f, 50.0f); // 目標 45 度，最高速度限制 50 RPM
-        delay(20); // 嚴格維持大廟馬達推薦的 20ms 刷新週期
+        delay(20); // 嚴格維持达妙馬達推薦的 20ms 刷新週期
     }
     
     Serial.println("--- Step 2: Motor3 反轉 -50 RPM, Motor4 回到 0.0 度 ---");
